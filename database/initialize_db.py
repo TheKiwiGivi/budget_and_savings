@@ -21,4 +21,4 @@ def test_connection():
         if connection is not None:
             connection.close()
 
-    return response
+    return response[0]

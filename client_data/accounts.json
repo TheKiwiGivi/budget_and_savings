@@ -1,18 +1,20 @@
-[
 {
-    "id": "acc1",
-    "account_type": "Checking",
-    "balance": 15000.25,
-    "currency": "NOK",
-    "owner": "Alice"
-  },
+  "accounts": [
+    {
+      "id": "acc1",
+      "account_type": "Checking",
+      "balance": 15000.25,
+      "currency": "NOK",
+      "owner": "Alice"
+    },
 
-  {
-    "id": "acc2",
-    "account_type": "Checking",
-    "balance": 65.34,
-    "currency": "NOK",
-    "owner": "Stian"
-  }
+    {
+      "id": "acc2",
+      "account_type": "Checking",
+      "balance": 65.34,
+      "currency": "NOK",
+      "owner": "Stian"
+    }
 
-]
+  ]
+}
