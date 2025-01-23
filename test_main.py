@@ -1,13 +1,21 @@
 import unittest
 
-from main import retrieve_client_info
-from database.initialize_db import test_connection
+from main import *
+from database.handle_db_calls import test_connection, retrieve_account_info
 
 
-class TestRetrieveClientInfo(unittest.TestCase):
-    def test_retrieve_client_info(self):
-        client_info = retrieve_client_info(client_id="acc1")
-        self.assertEqual("Alice", client_info.owner)
+#class TestRetrieveAccountInfo(unittest.TestCase):
+    #def test_retrieve_account_info(self):
+        #account_info = retrieve_account_info(account_id="acc1")
+        #self.assertEqual("Alice", account_info.owner)
+        #TODO: more tests
+
+    #def test_make_transaction(self):
+        #self.assertEqual(15000.25, retrieve_account_info(account_id="acc1").balance)
+
+        #make_transaction(account_id, )
+
+
         #TODO: more tests
 
 class TestDatabaseConnection(unittest.TestCase):
