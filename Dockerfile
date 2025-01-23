@@ -1,8 +1,8 @@
-FROM ubuntu:latest
+FROM python:3
 
-RUN apt update
-RUN apt install python3 -y
-
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir psycopg2
+ 
 WORKDIR /usr/app/src
 
 COPY . .
