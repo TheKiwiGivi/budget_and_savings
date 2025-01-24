@@ -15,7 +15,7 @@ docker run --network budget_network --name budget_app budget_image
 
 # Functionality
 The Budget and Savings app 
-![alt text](https://github.com/[TheKiwiGivi]/[budget_and_savings]/blob/main/diagram_budget_and_savings.png?raw=true)
+![alt text](https://github.com/TheKiwiGivi/budget_and_savings/blob/main/diagram_budget_and_savings.png?raw=true)
 
 
 # Tanker om videre utvikling
