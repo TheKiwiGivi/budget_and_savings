@@ -4,6 +4,11 @@ import subprocess
 from types import SimpleNamespace
 import json
 
+from starlette.applications import Starlette
+from starlette.responses import JSONResponse
+from starlette.routing import Route
+
+
 def read_json():
     try:
         with open("account_data/accounts.json") as file:
@@ -13,6 +18,25 @@ def read_json():
         print("Something went wrong parsing json: {0}".format(e))
 
 
+async def welcome(_):
+    return JSONResponse({"message": "Welcome to the Budget and Savings app!"})
+
+subprocess.run(["python", "-m", "unittest"])
+
+routes = [
+    Route("/", endpoint=welcome),
+    Route("/account/{account_id}/details", endpoint=get_account_details, methods=["GET"]),
+    Route("/account/{account_id}/transactions", endpoint=get_account_transactions, methods=["GET"]),
+    Route("/account/{account_id}/recommendation", endpoint=get_account_recommendations, methods=["GET"]),
+    Route("/make_transaction/{account_id}", endpoint=hello_world, methods=["POST"]),
+    Route("/make_account", endpoint=hello_world, methods=["POST"])
+]
+app = Starlette(routes=routes)
+
+def app(scope, receive, send):
+    print("got here")
+
+
 def main():
     print("main started")
     subprocess.run(["python", "-m", "unittest"])
@@ -20,7 +44,6 @@ def main():
     #initialize db
     initialize_tables()
     
-
     print("main ended")
 
 

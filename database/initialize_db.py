@@ -4,6 +4,7 @@ import psycopg2
 params = config()
 
 def initialize_tables():
+    connection = None
     try:
         print("Attempting to create tables")
         connection = psycopg2.connect(**params)

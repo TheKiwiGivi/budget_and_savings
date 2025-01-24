@@ -1,6 +1,7 @@
 
 from database.config import config
 import psycopg2
+import classes
 
 params = config()
 
@@ -14,16 +15,21 @@ def test_connection():
         curs = connection.cursor()
         curs.execute("SELECT version()")
 
-        response = curs.fetchone()
+        data = curs.fetchone()
         curs.close()
+
+        if len(data > 0):
+            response = data[0]
     except Exception as e:
         print("An error occurred in test_connection: {0}".format(e))
     finally:
         if connection is not None:
             connection.close()
 
-    return response[0]
+    return response
 
 
-def retrieve_account_info(account_id):
-    return account_id
+
+
+async def get_account_details(account_id):
+    return classes.Account
