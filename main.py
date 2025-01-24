@@ -1,10 +1,7 @@
 from database.initialize_db import *
-from database.handle_db_calls import *
-import subprocess
+from database.handle_requests import *
 from types import SimpleNamespace
 import json
-import uvicorn
-import asyncio
 
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
@@ -42,6 +39,7 @@ routes = [
 ]
 
 app = Starlette(routes=routes)
+
 
 
     #await uvicorn.run(app, host='0.0.0.0', port=8501)

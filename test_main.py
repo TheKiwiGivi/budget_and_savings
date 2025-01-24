@@ -1,8 +1,9 @@
 import unittest
 
 from main import *
-from database.handle_db_calls import *
+from budget_and_savings.database.handle_requests import *
 import classes
+from budget_and_savings.database.handle_db_calls import *
 
 
 class TestGetAndChangeAccountInfo(unittest.TestCase):
@@ -30,4 +31,4 @@ class TestGetAndChangeAccountInfo(unittest.TestCase):
 
 class TestDatabaseConnection(unittest.TestCase):
     def test_test_connection(self):
-        self.assertIn("postgres", test_connection().lower())
+        self.assertIn("postgres", db_test_connection().lower())

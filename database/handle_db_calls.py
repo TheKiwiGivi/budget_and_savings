@@ -1,18 +1,14 @@
 
 from database.config import config
 import psycopg2
-import classes
-import json
-from types import SimpleNamespace
 
-from starlette.responses import JSONResponse, HTMLResponse
 
 goals = ["phone" ,"car", "house"]
 
 params = config()
 
 #function to check if connection to psql can be established
-def test_connection():
+def db_test_connection():
     connection = None
     response = ''
     try:
@@ -24,7 +20,7 @@ def test_connection():
         data = curs.fetchone()
         curs.close()
 
-        if data:
+        if data and data[0] != None:
             response = data[0]
     except Exception as e:
         print("An error occurred in test_connection: {0}".format(e))
@@ -34,48 +30,35 @@ def test_connection():
 
     return response
 
-
-def handle_get_account_details(request):
-    account_id = request.path_params.get('account_id')
-    return get_account_details(account_id)
-
-def get_account_details(account_id):
-    return classes.Account
-
-async def handle_make_account(request):
-    return make_account(await request.body())
-
-
-def parse_account_json(body):
-    print(type(body))
-    data = None
-    try:
-        data = json.loads(body, object_hook=lambda d: SimpleNamespace(**d))
-        print(data)
-        print(data.owner)
-    except Exception as e:
-        print("Something went wrong parsing json: {0}".format(e))
-    return data
-        
-
-def make_account(body):
-    #parse body
-    body = parse_account_json(body)
-    if not body:
-        return JSONResponse({"response": "Parsing body failed"}, status_code=404)
+def db_get_account_details():
     
+
+def db_make_account(body):
+    connection = None
     new_account_id = 0
-    return JSONResponse({"response": f"{new_account_id} created."})
+    try:
+        connection = psycopg2.connect(**params)
+        curs = connection.cursor()
 
-def handle_make_goal(request):
-    account_id = request.path_params.get('account_id')
-    goal = request.path_params.get('goal')
+        #get highest account id
+        curs.execute("SELECT max(id) from accounts")
+        data = curs.fetchone()
 
-    #error handling
-    if goal.lower() not in goals:
-        return JSONResponse({"response": "Goal not found"}, status_code=404)
-    
-    return make_goal(account_id, goal)
+        #update new account id
+        if data and data[0] != None:
+            new_account_id = data[0] + 1
 
-def make_goal(account_id, goal):
-    return JSONResponse({"response": "Goal created"})
+        #create account
+        curs.execute("INSERT INTO accounts (id, owner, balance, currency, account_type) VALUES (%s, %s, %s, %s, %s)", 
+                     (new_account_id, body.owner, body.balance, body.currency, body.account_type))
+        
+        connection.commit()
+        curs.close()
+
+    except Exception as e:
+        print("An error occurred in test_connection: {0}".format(e))
+    finally:
+        if connection is not None:
+            connection.close()
+
+    return new_account_id

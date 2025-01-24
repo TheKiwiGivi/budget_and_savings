@@ -2,26 +2,30 @@
 
 # How to run
 Create docker network:
+
 docker network create budget_network
 
 Run Postgres image with database init file:
+
 docker run --network budget_network -d --name postgres -e POSTGRES_PASSWORD=password postgres:latest
 
 CREATE DATABASE budget_db;
 
 
 Run app:
+
 docker run --network budget_network --name budget_app budget_image
 
 # Functionality
 The Budget and Savings app!
 
 Features:
-*Make an account
-*Check account details
-*Create transaction
-*Create a savings goal
-*Check goal progress
+
+1. Make an account
+2. Check account details
+3. Create transaction
+4. Create a savings goal
+5. Check goal progress
 
 Flow:
 ![img not found](./diagram_budget_and_savings.png)
