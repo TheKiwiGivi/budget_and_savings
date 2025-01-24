@@ -13,6 +13,10 @@ CREATE DATABASE budget_db;
 Run app:
 docker run --network budget_network --name budget_app budget_image
 
+# Functionality
+The Budget and Savings app 
+![alt text](https://github.com/[TheKiwiGivi]/[budget_and_savings]/blob/main/diagram_budget_and_savings.png?raw=true)
+
 
 # Tanker om videre utvikling
 Om jeg hadde jobbet mer på dette prosjektet ville jeg ha sørget for å kunne kjøre koden på host i tillegg til i en container. Etter jeg fikk container-miljøet til å fungere valgte jeg å ikke ta meg tid til å kunne kjøre programmet lokalt. På sikt vil det hemme utviklingsprosessen da jeg må lage nytt image og kjøre opp container for hver test.
