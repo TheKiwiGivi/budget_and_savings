@@ -14,9 +14,16 @@ Run app:
 docker run --network budget_network --name budget_app budget_image
 
 # Functionality
-The Budget and Savings app 
-!img not found(https://github.com/TheKiwiGivi/budget_and_savings/blob/main/diagram_budget_and_savings.png?raw=true)
-!img not found(./diagram_budget_and_savings.png)
+The Budget and Savings app!
+
+Features:
+*Make an account
+*Check account details
+*Create transaction
+*Create a savings goal
+*Check goal progress
+
+Flow:
 ![img not found](./diagram_budget_and_savings.png)
 
 
@@ -28,5 +35,6 @@ Jeg lagde database manuelt nå men burde ideelt ha .sql scripts for dette også 
 
 Account id kan byttes til primary key og kanskje UUID
 
-Make the app async
+# Scope
+I chose not to include security as part of the scope.
 

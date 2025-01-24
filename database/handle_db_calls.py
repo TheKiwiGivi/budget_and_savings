@@ -2,6 +2,8 @@
 from database.config import config
 import psycopg2
 import classes
+import json
+from types import SimpleNamespace
 
 from starlette.responses import JSONResponse, HTMLResponse
 
@@ -33,25 +35,47 @@ def test_connection():
     return response
 
 
-def get_account_details(request):
+def handle_get_account_details(request):
+    account_id = request.path_params.get('account_id')
+    return get_account_details(account_id)
+
+def get_account_details(account_id):
     return classes.Account
 
-def get_account_transactions(request):
-    transactions = list()
-    transactions.append(classes.Transaction)
-    return transactions
+async def handle_make_account(request):
+    return make_account(await request.body())
 
-def make_account(request):
+
+def parse_account_json(body):
+    print(type(body))
+    data = None
+    try:
+        data = json.loads(body, object_hook=lambda d: SimpleNamespace(**d))
+        print(data)
+        print(data.owner)
+    except Exception as e:
+        print("Something went wrong parsing json: {0}".format(e))
+    return data
+        
+
+def make_account(body):
+    #parse body
+    body = parse_account_json(body)
+    if not body:
+        return JSONResponse({"response": "Parsing body failed"}, status_code=404)
+    
     new_account_id = 0
     return JSONResponse({"response": f"{new_account_id} created."})
 
-def make_goal(request):
+def handle_make_goal(request):
     account_id = request.path_params.get('account_id')
     goal = request.path_params.get('goal')
 
     #error handling
-    #TODO: check account id
     if goal.lower() not in goals:
         return JSONResponse({"response": "Goal not found"}, status_code=404)
     
-    return JSONResponse({"response": "Goal created!"})
+    return make_goal(account_id, goal)
+
+def make_goal(account_id, goal):
+    return JSONResponse({"response": "Goal created"})
