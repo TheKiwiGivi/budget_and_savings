@@ -3,6 +3,7 @@ from database.handle_db_calls import *
 import subprocess
 from types import SimpleNamespace
 import json
+import uvicorn
 
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
@@ -21,30 +22,30 @@ def read_json():
 async def welcome(_):
     return JSONResponse({"message": "Welcome to the Budget and Savings app!"})
 
-subprocess.run(["python", "-m", "unittest"])
-
-routes = [
-    Route("/", endpoint=welcome),
-    Route("/account/{account_id}/details", endpoint=get_account_details, methods=["GET"]),
-    Route("/account/{account_id}/transactions", endpoint=get_account_transactions, methods=["GET"]),
-    Route("/account/{account_id}/recommendation", endpoint=get_account_recommendations, methods=["GET"]),
-    Route("/make_transaction/{account_id}", endpoint=hello_world, methods=["POST"]),
-    Route("/make_account", endpoint=hello_world, methods=["POST"])
-]
-app = Starlette(routes=routes)
-
-def app(scope, receive, send):
-    print("got here")
 
 
 def main():
-    print("main started")
+    print("App started")
+
+    #run unit tests
     subprocess.run(["python", "-m", "unittest"])
 
     #initialize db
     initialize_tables()
+
+    #create server
+    routes = [
+        Route("/", endpoint=welcome),
+        Route("/account/{account_id}/details", endpoint=get_account_details, methods=["GET"]),
+        Route("/account/{account_id}/transactions", endpoint=welcome, methods=["GET"]),
+        Route("/account/{account_id}/recommendation", endpoint=welcome, methods=["GET"]),
+        Route("/make_transaction/{account_id}", endpoint=welcome, methods=["POST"]),
+        Route("/make_account", endpoint=welcome, methods=["POST"])
+    ]
+
+    app = Starlette(routes=routes)
+    uvicorn.run(app, host='0.0.0.0', port=8501)
     
-    print("main ended")
 
 
 

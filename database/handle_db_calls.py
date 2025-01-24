@@ -18,7 +18,7 @@ def test_connection():
         data = curs.fetchone()
         curs.close()
 
-        if len(data > 0):
+        if data:
             response = data[0]
     except Exception as e:
         print("An error occurred in test_connection: {0}".format(e))
@@ -31,5 +31,5 @@ def test_connection():
 
 
 
-async def get_account_details(account_id):
+def get_account_details(account_id):
     return classes.Account

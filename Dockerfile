@@ -12,4 +12,6 @@ WORKDIR /usr/app/src
 
 COPY . .
 
-CMD ["uvicorn", "main:app", "--reload", "--host=0.0.0.0", "--port=8501"]
+
+CMD ["python3", "./main.py"]
+#CMD ["uvicorn", "main:app", "--reload", "--host=0.0.0.0", "--port=8501"]
