@@ -96,6 +96,8 @@ More ideas:
 
 8. Security, authentication
 
+9. Make transaction could return updated values
+
 # Scope
 I started working on saving goals, but ran out of time as I'm leaving the country for a week.
 
