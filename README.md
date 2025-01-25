@@ -31,12 +31,31 @@ Features:
 1. Make an account
 2. Check account details
 3. Create transaction
-4. Create a savings goal
-5. Check goal progress
+
+# API
+
+Homepage:
+
+GET http://127.0.0.1:8501/
+
+Get account details:
+
+http://127.0.0.1:8501/account_id/details
+
+Make transaction:
+
+POST http://127.0.0.1:8501/make_transaction
+
+{
+            "description": "Grocery Store",
+            "amount": -75.5,
+            "currency": "NOK",
+            "account_id": 0
+}
+
 
 Flow:
-![img not found](./diagram_budget_and_savings.png)
-![img not found](./jira_budget_app.png)
+![img not found](./images/diagram_budget_and_savings.png)
 
 
 # Thoughts on future development
@@ -61,16 +80,24 @@ More ideas:
 8. Security, authentication
 
 # Scope
+I started working on saving goals, but ran out of time as I'm leaving the country for a week. In terms of programming capabilities, adding such functionality is fairly similar to what has already been made.
+
 I chose not to include security as part of the scope.
 
 I focused heavily on making a good foundation for an app, not focusing on adding features. I feel the setup has made it easy to expand with more functionality.
 
 I did not use the currency value
 
-For easy testing, no data persistence has been made (could be made with adding volumes), meaning that data resets when postgres container restarts.
+For easy testing, no data persistence has been made (could be made by adding volumes), meaning that all data resets when postgres container restarts.
 
 # Links
 
-I'm unsure if the Jira project is visibe to guests soI included an image above.
+I'm unsure if the Jira project is visibe to guests soI included an image below.
 
 https://budgetandsavings.atlassian.net/jira/servicedesk/projects/BS/boards/1
+
+# Images 
+
+![img not found](./images/jira_budget_app.png)
+![img not found](./images/app_when_running.png)
+![img not found](./images/postgres_db.png)
