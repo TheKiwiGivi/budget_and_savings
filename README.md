@@ -37,6 +37,13 @@ Features:
 2. Check account details
 3. Create transaction
 
+You can see the tables either by setting up pgAdmin or from the terminal:
+
+docker exec -it postgres psql -U postgres -d budget_db
+
+SELECT * FROM accounts;
+SELECT * FROM transaction_history;
+
 # API
 
 Homepage:
