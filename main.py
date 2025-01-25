@@ -22,7 +22,7 @@ def create_app():
         Route("/", endpoint=welcome),
         Route("/account/{account_id}/details", endpoint=handle_get_account_details, methods=["GET"]),
         Route("/account/{account_id}/make_goal/{goal}", endpoint=handle_make_goal, methods=["POST"]),
-        Route("/make_transaction/{account_id}", endpoint=welcome, methods=["POST"]),
+        Route("/make_transaction", endpoint=handle_make_transaction, methods=["POST"]),
         Route("/make_account", endpoint=handle_make_account, methods=["POST"]),
     ]
 

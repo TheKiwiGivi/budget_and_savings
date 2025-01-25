@@ -1,7 +1,7 @@
 
 from database.config import config
 from database.handle_db_calls import *
-import classes
+from classes import *
 import json
 from types import SimpleNamespace
 
@@ -22,17 +22,24 @@ async def handle_get_account_details(request):
     account_id = request.path_params.get('account_id')
     return get_account_details(account_id)
 
+def format_account_details(account_details):
+    return {"id": account_details[Account.id], 
+            "owner": account_details[Account.owner],
+            "balance": account_details[Account.balance],
+            "currency": account_details[Account.currency],
+            "account_type": account_details[Account.account_type]
+            }
+
 def get_account_details(account_id):
     account_found = False
     if is_valid_account_id(account_id):
         account_details, account_found = db_get_account_details(account_id)
-        print(account_details)
 
     if not account_found:
-        return JSONResponse({"response": "Account not found"}, status_code=404)
+        return JSONResponse({"message": "Account not found"}, status_code=404)
     
 
-    return JSONResponse({"response": account_details})
+    return JSONResponse(format_account_details(account_details))
 
 
 def parse_account_json(body):
@@ -55,14 +62,15 @@ def make_account(body):
     #parse body
     body = parse_account_json(body)
     if not body:
-        return JSONResponse({"response": "Parsing body failed"}, status_code=404)
+        return JSONResponse({"message": "Parsing body failed"}, status_code=404)
     elif not body_is_valid(body):
-        return JSONResponse({"response": "Body missing attribute(s)"}, status_code=404)
+        return JSONResponse({"message": "Body missing attribute(s)"}, status_code=404)
     
     #create account
     account_id = db_make_account(body)
+    account_details, _ = db_get_account_details(account_id)
     
-    return JSONResponse({"response": f"Account created for {body.owner} and was given account id: {account_id}."})
+    return JSONResponse(format_account_details(account_details), status_code=201)
 
 async def handle_make_goal(request):
     account_id = request.path_params.get('account_id')
@@ -70,11 +78,27 @@ async def handle_make_goal(request):
 
     #error handling
     if goal.lower() not in goals:
-        return JSONResponse({"response": "Goal not found"}, status_code=404)
+        return JSONResponse({"message": "Goal not found"}, status_code=404)
     
     return make_goal(account_id, goal)
 
 def make_goal(account_id, goal):
-    return JSONResponse({"response": "Goal created"})
+    return JSONResponse({"message": "Goal created"})
 
 
+async def handle_make_transaction(request):
+    return make_transaction(await request.body())
+
+
+def make_transaction(body):
+    #parse body
+    body = parse_account_json(body)
+    if not body:
+        return JSONResponse({"message": "Parsing body failed"}, status_code=404)
+    elif not body_is_valid(body):
+        return JSONResponse({"message": "Body missing attribute(s)"}, status_code=404)
+    
+    #create account
+    transaction_id = db_make_transaction(body)
+    
+    return JSONResponse({"transaction id": transaction_id})

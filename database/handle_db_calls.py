@@ -1,7 +1,7 @@
 
 from database.config import config
 import psycopg2
-import classes
+from classes import *
 
 goals = ["phone" ,"car", "house"]
 
@@ -33,7 +33,7 @@ def db_test_connection():
 def db_get_account_details(account_id):
     connection = None
     found = False
-    account_details = classes.Account
+    account_details = Account
 
     try:
         connection = psycopg2.connect(**params)
@@ -88,3 +88,39 @@ def db_make_account(body):
             connection.close()
 
     return new_account_id
+
+def db_make_transaction(body):
+    connection = None
+    transaction_id = 0
+    try:
+        connection = psycopg2.connect(**params)
+        curs = connection.cursor()
+
+        #this is not meant to be a secure way to deal with banking, just for visual effects
+        curs.execute("UPDATE accounts SET balance = balance + %s WHERE id = %s", 
+                     (body.amount, body.account_id))
+        
+        connection.commit()
+
+        #get highest account id
+        curs.execute("SELECT max(id) from transaction_history")
+        data = curs.fetchone()
+
+        #update new account id
+        if data and data[0] != None:
+            transaction_id = data[0] + 1
+
+        #create transaction history
+        curs.execute("INSERT INTO transaction_history (id, description, amount, currency, account_id) VALUES (%s, %s, %s, %s, %s)", 
+                     (transaction_id, body.description, body.amount, body.currency, body.account_id))
+        
+        connection.commit()
+        curs.close()
+
+    except Exception as e:
+        print("An error occurred in db_make_account: {0}".format(e))
+    finally:
+        if connection is not None:
+            connection.close()
+
+    return transaction_id

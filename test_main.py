@@ -2,7 +2,7 @@ import unittest
 
 from main import *
 from database.handle_requests import *
-import classes
+from classes import *
 from database.handle_db_calls import *
 
 
@@ -27,10 +27,10 @@ class TestGetAndChangeAccountInfo(unittest.TestCase):
 
         self.assertTrue(found)
         self.assertTrue(isinstance(account_details, tuple))
-        self.assertEqual("Stian", account_details[classes.Account.owner])
-        self.assertEqual(15000.25, account_details[classes.Account.balance])
-        self.assertEqual("NOK", account_details[classes.Account.currency])
-        self.assertEqual("Checking", account_details[classes.Account.account_type])
+        self.assertEqual("Stian", account_details[Account.owner])
+        self.assertEqual(15000.25, account_details[Account.balance])
+        self.assertEqual("NOK", account_details[Account.currency])
+        self.assertEqual("Checking", account_details[Account.account_type])
 
 
         #check ID was newest
@@ -38,6 +38,32 @@ class TestGetAndChangeAccountInfo(unittest.TestCase):
 
         self.assertFalse(found)
         self.assertFalse(isinstance(account_details, tuple))
+
+    def test_db_make_transaction(self):
+
+        body = '''{"description": "transaction test",
+                "amount": 1.5,
+                "currency": "NOK",
+                "account_id": 0
+                }'''
+        
+
+        #get current balance
+        account_details, found = db_get_account_details(account_id=0)
+        old_account_balance = account_details[Account.balance]
+
+        #make transaction
+        parsed_body = parse_account_json(body)
+        db_make_transaction(parsed_body)
+
+        #check new balance
+        account_details, _ = db_get_account_details(account_id=0)
+        new_account_balance = account_details[Account.balance]
+        self.assertEqual(old_account_balance + 1.5, new_account_balance)
+        
+
+        
+
         
 
 
