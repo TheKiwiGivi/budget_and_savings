@@ -40,8 +40,6 @@ class TestGetAndChangeAccountInfo(unittest.TestCase):
         self.assertFalse(isinstance(account_details, tuple))
         
 
-    #def test_make_goal(self):
-
 
 
 class TestDatabaseConnection(unittest.TestCase):

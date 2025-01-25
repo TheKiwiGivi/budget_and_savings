@@ -9,11 +9,13 @@ from starlette.responses import JSONResponse
 
 goals = ["phone" ,"car", "house"]
 
-
 params = config()
 
+async def welcome(_):
+    return JSONResponse({"message": "Welcome to the Budget and Savings app!"})
+
 def is_valid_account_id(account_id):
-    return isinstance(account_id, int) and account_id >= 0
+    return True
 
 
 async def handle_get_account_details(request):
@@ -30,7 +32,7 @@ def get_account_details(account_id):
         return JSONResponse({"response": "Account not found"}, status_code=404)
     
 
-    return account_details
+    return JSONResponse({"response": account_details})
 
 
 def parse_account_json(body):

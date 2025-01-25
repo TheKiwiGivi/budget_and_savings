@@ -1,43 +1,23 @@
 from database.initialize_db import *
 from database.handle_requests import *
-from types import SimpleNamespace
-import json
 from test_main import *
 import subprocess
 
 
 from starlette.applications import Starlette
-from starlette.responses import JSONResponse
 from starlette.routing import Route
 
 
-def read_json():
-    try:
-        with open("account_data/accounts.json") as file:
-            data = json.loads(file.read(), object_hook=lambda d: SimpleNamespace(**d))
-            print(data.accounts[0].owner)
-    except Exception as e:
-        print("Something went wrong parsing json: {0}".format(e))
-
-
-async def welcome(_):
-    return JSONResponse({"message": "Welcome to the Budget and Savings app!"})
-
-#async def main():
-print("App started")
-
-    #run unit tests
-    #await subprocess.run(["python", "-m", "unittest"])
-
-
-#unittest.main()
 def create_app():
-    print("test")
+    print("App started")
+
     #initialize db
     initialize_tables()
-    #unittest.main()
+
+    #run tests
     subprocess.run(["python", "-m", "unittest"])
-#create server
+
+    #create server
     routes = [
         Route("/", endpoint=welcome),
         Route("/account/{account_id}/details", endpoint=handle_get_account_details, methods=["GET"]),
@@ -48,11 +28,3 @@ def create_app():
 
     app = Starlette(routes=routes)
     return app
-
-
-
-    #await uvicorn.run(app, host='0.0.0.0', port=8501)
-
-
-#if __name__=="__main__":
-    #asyncio.run(main())
