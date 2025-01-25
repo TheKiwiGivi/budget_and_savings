@@ -47,6 +47,18 @@ Get account details:
 
 http://127.0.0.1:8501/account_id/details
 
+Make account:
+
+POST http://127.0.0.1:8501/make_account
+
+    {
+      "account_type": "Checking",
+      "balance": 64.2,
+      "currency": "NOK",
+      "owner": "Eivind"
+    }
+
+
 Make transaction:
 
 POST http://127.0.0.1:8501/make_transaction
@@ -68,7 +80,7 @@ If i had worked on this for longer I would've made sure to establish a local dev
 
 More ideas:
 
-1. More functionality.
+1. More functionality
 
 2. Expand tests to make HTTP requests instead of only testing functions.
 
@@ -90,6 +102,8 @@ I started working on saving goals, but ran out of time as I'm leaving the countr
 I focused heavily on making a good foundation for an app, not focusing on adding features. I feel the setup has made it easy to expand with more functionality.
 
 I chose not to include security as part of the scope.
+
+I did not make the port easily configurable (need to change Dockerfile)
 
 I did not use the currency value.
 
