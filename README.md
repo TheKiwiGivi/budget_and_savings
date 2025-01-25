@@ -63,12 +63,12 @@ Make transaction:
 
 POST http://127.0.0.1:8501/make_transaction
 
-{
-            "description": "Grocery Store",
-            "amount": -75.5,
-            "currency": "NOK",
-            "account_id": 0
-}
+    {
+        "description": "Grocery Store",
+        "amount": -75.5,
+        "currency": "NOK",
+        "account_id": 0
+    }
 
 
 Flow:
