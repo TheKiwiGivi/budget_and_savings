@@ -88,6 +88,8 @@ I chose not to include security as part of the scope.
 
 I did not use the currency value.
 
+Some tests may fail the first time as no entries exist, but they should pass the second time. In a real app I would address that.
+
 I did not created branches for such a small project.
 
 For easy testing, no data persistence has been made (could be made by adding volumes), meaning that all data resets when postgres container restarts.
