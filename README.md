@@ -9,6 +9,8 @@ Run Postgres image with database init file:
 
 docker run --network budget_network -d --name postgres -e POSTGRES_PASSWORD=password postgres:latest
 
+Either add ./db/create_database.sql as a entrypoint volume or run the following command in postgres container:
+
 CREATE DATABASE budget_db;
 
 
@@ -36,9 +38,14 @@ Om jeg hadde jobbet mer på dette prosjektet ville jeg ha sørget for å kunne k
 
 Jeg lagde database manuelt nå men burde ideelt ha .sql scripts for dette også (i tillegg til .sql scripts for tabell initialisering).
 
+Account ID could be UUID.
 
-Account id kan byttes til primary key og kanskje UUID
+I would like to make a OpenAPI .yaml file with Swagger-UI for making easy HTTP requests.
 
 # Scope
 I chose not to include security as part of the scope.
+
+For easy testing, no data persistence has been made (could be made with adding volumes), meaning that data resets when postgres container restarts.
+
+
 

@@ -13,5 +13,7 @@ WORKDIR /usr/app/src
 COPY . .
 
 
+ENTRYPOINT [ "uvicorn" ]
+CMD ["--factory", "main:create_app", "--host=0.0.0.0", "--port=8501"]
 #CMD ["python3", "./main.py"]
-CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--port=8501"]
+#CMD ["uvicorn", "main:app", "--host=0.0.0.0", "--port=8501"]

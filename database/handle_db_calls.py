@@ -1,7 +1,7 @@
 
 from database.config import config
 import psycopg2
-
+import classes
 
 goals = ["phone" ,"car", "house"]
 
@@ -30,8 +30,34 @@ def db_test_connection():
 
     return response
 
-def db_get_account_details():
-    
+def db_get_account_details(account_id):
+    connection = None
+    found = False
+    account_details = classes.Account
+
+    try:
+        connection = psycopg2.connect(**params)
+        curs = connection.cursor()
+
+        #get highest account id
+        curs.execute("SELECT id, owner, balance, currency, account_type FROM accounts WHERE id = %s" % account_id)
+        data = curs.fetchone()
+
+        #update new account id
+        if data:
+            account_details = data
+            found = True
+
+        connection.commit()
+        curs.close()
+
+    except Exception as e:
+        print("An error occurred in db_get_account_details: {0}".format(e))
+    finally:
+        if connection is not None:
+            connection.close()
+
+    return account_details, found
 
 def db_make_account(body):
     connection = None
@@ -56,7 +82,7 @@ def db_make_account(body):
         curs.close()
 
     except Exception as e:
-        print("An error occurred in test_connection: {0}".format(e))
+        print("An error occurred in db_make_account: {0}".format(e))
     finally:
         if connection is not None:
             connection.close()

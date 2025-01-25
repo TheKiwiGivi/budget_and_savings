@@ -2,6 +2,9 @@ from database.initialize_db import *
 from database.handle_requests import *
 from types import SimpleNamespace
 import json
+from test_main import *
+import subprocess
+
 
 from starlette.applications import Starlette
 from starlette.responses import JSONResponse
@@ -26,19 +29,25 @@ print("App started")
     #run unit tests
     #await subprocess.run(["python", "-m", "unittest"])
 
-#initialize db
-initialize_tables()
 
+#unittest.main()
+def create_app():
+    print("test")
+    #initialize db
+    initialize_tables()
+    #unittest.main()
+    subprocess.run(["python", "-m", "unittest"])
 #create server
-routes = [
-    Route("/", endpoint=welcome),
-    Route("/account/{account_id}/details", endpoint=handle_get_account_details, methods=["GET"]),
-    Route("/account/{account_id}/make_goal/{goal}", endpoint=handle_make_goal, methods=["POST"]),
-    Route("/make_transaction/{account_id}", endpoint=welcome, methods=["POST"]),
-    Route("/make_account", endpoint=handle_make_account, methods=["POST"]),
-]
+    routes = [
+        Route("/", endpoint=welcome),
+        Route("/account/{account_id}/details", endpoint=handle_get_account_details, methods=["GET"]),
+        Route("/account/{account_id}/make_goal/{goal}", endpoint=handle_make_goal, methods=["POST"]),
+        Route("/make_transaction/{account_id}", endpoint=welcome, methods=["POST"]),
+        Route("/make_account", endpoint=handle_make_account, methods=["POST"]),
+    ]
 
-app = Starlette(routes=routes)
+    app = Starlette(routes=routes)
+    return app
 
 
 

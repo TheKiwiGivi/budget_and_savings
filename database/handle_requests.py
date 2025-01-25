@@ -9,7 +9,11 @@ from starlette.responses import JSONResponse
 
 goals = ["phone" ,"car", "house"]
 
+
 params = config()
+
+def is_valid_account_id(account_id):
+    return isinstance(account_id, int) and account_id >= 0
 
 
 async def handle_get_account_details(request):
@@ -17,7 +21,16 @@ async def handle_get_account_details(request):
     return get_account_details(account_id)
 
 def get_account_details(account_id):
-    return classes.Account
+    account_found = False
+    if is_valid_account_id(account_id):
+        account_details, account_found = db_get_account_details(account_id)
+        print(account_details)
+
+    if not account_found:
+        return JSONResponse({"response": "Account not found"}, status_code=404)
+    
+
+    return account_details
 
 
 def parse_account_json(body):
@@ -33,7 +46,7 @@ async def handle_make_account(request):
     return make_account(await request.body())
 
 def body_is_valid(body):
-    #check if all necessary attributes are in 'body'
+    #TODO: check if all necessary attributes are in 'body'
     return True
 
 def make_account(body):
@@ -61,3 +74,5 @@ async def handle_make_goal(request):
 
 def make_goal(account_id, goal):
     return JSONResponse({"response": "Goal created"})
+
+

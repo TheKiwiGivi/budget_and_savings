@@ -1,28 +1,43 @@
 import unittest
 
 from main import *
-from budget_and_savings.database.handle_requests import *
+from database.handle_requests import *
 import classes
-from budget_and_savings.database.handle_db_calls import *
+from database.handle_db_calls import *
 
 
 class TestGetAndChangeAccountInfo(unittest.TestCase):
-    def test_get_account_details(self):
-        account_details = get_account_details(account_id="acc1")
-        self.assertEqual("Alice", account_details.owner)
-        #TODO: more tests
+    def test_db_get_account_details(self):
+        #requires at least one account
+        _, found = db_get_account_details(account_id=0)
+        self.assertTrue(found)
 
-    def test_make_account(self):
+    def test_db_make_account(self):
 
         body = '''{"account_type": "Checking",
                 "balance": 15000.25,
                 "currency": "NOK",
                 "owner": "Stian"
                 }'''
-        account_id = make_account(body)
+        
+        parsed_body = parse_account_json(body)
+        account_id = db_make_account(parsed_body)
 
-        account_details = get_account_details(account_id=account_id)
-        self.assertEqual("Stian", account_details.owner)
+        account_details, found = db_get_account_details(account_id=account_id)
+
+        self.assertTrue(found)
+        self.assertTrue(isinstance(account_details, tuple))
+        self.assertEqual("Stian", account_details[classes.Account.owner])
+        self.assertEqual(15000.25, account_details[classes.Account.balance])
+        self.assertEqual("NOK", account_details[classes.Account.currency])
+        self.assertEqual("Checking", account_details[classes.Account.account_type])
+
+
+        #check ID was newest
+        account_details, found = db_get_account_details(account_id=account_id+1)
+
+        self.assertFalse(found)
+        self.assertFalse(isinstance(account_details, tuple))
         
 
     #def test_make_goal(self):
