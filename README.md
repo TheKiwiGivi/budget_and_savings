@@ -63,13 +63,13 @@ If i had worked on this for longer I would've made sure to establish a local dev
 
 More ideas:
 
-1. Account ID could be UUID.
+1. More functionality.
 
 2. Expand tests to make HTTP requests instead of only testing functions.
 
 3. I would like to make an OpenAPI .yaml file with Swagger-UI for making easy HTTP requests.
 
-4. More functionality.
+4. Account ID could be UUID.
 
 5. More classes for better organizing
 
@@ -80,11 +80,11 @@ More ideas:
 8. Security, authentication
 
 # Scope
-I started working on saving goals, but ran out of time as I'm leaving the country for a week. In terms of programming capabilities, adding such functionality is fairly similar to what has already been made.
-
-I chose not to include security as part of the scope.
+I started working on saving goals, but ran out of time as I'm leaving the country for a week.
 
 I focused heavily on making a good foundation for an app, not focusing on adding features. I feel the setup has made it easy to expand with more functionality.
+
+I chose not to include security as part of the scope.
 
 I did not use the currency value
 
@@ -98,6 +98,18 @@ https://budgetandsavings.atlassian.net/jira/servicedesk/projects/BS/boards/1
 
 # Images 
 
+Jira:
+
 ![img not found](./images/jira_budget_app.png)
+
+App running in terminal:
+
 ![img not found](./images/app_when_running.png)
+
+Database:
+
 ![img not found](./images/postgres_db.png)
+
+Example request:
+
+![img not found](./images/example_request.png)
