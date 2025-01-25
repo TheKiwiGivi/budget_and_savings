@@ -45,7 +45,7 @@ GET http://127.0.0.1:8501/
 
 Get account details:
 
-http://127.0.0.1:8501/<account_id>/details
+http://127.0.0.1:8501/account/<account_id>/details
 
 Make account:
 
