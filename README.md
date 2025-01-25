@@ -86,7 +86,9 @@ I focused heavily on making a good foundation for an app, not focusing on adding
 
 I chose not to include security as part of the scope.
 
-I did not use the currency value
+I did not use the currency value.
+
+I did not created branches for such a small project.
 
 For easy testing, no data persistence has been made (could be made by adding volumes), meaning that all data resets when postgres container restarts.
 
