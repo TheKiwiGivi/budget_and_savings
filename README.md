@@ -1,7 +1,9 @@
 # budget_and_savings
 
 # Description
-This code is primarily the baseline for a larger budget and savings app. I didn't notice there was a template for a readme file so mine might be structured a bit different to that.
+This code is primarily the baseline for a larger budget and savings app. It only handles the backend part of the app and expects a frontend to send HTTP requests with a JSON body for data. See image below for flow.
+
+I didn't notice there was a template for a readme file so mine might be structured a bit different to that. The app is run in docker containers and should hopefully be fairly straightforward to run on other devices.
 
 # How to run
 Create docker network:
